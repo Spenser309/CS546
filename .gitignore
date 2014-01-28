@@ -9,4 +9,8 @@ install-sh
 ltmain.sh
 m4
 missing
- 
+Makefile
+libtool
+.deps
+*.o
+*~
