@@ -1,2 +1,5 @@
 ACLOCAL_AMFLAGS=-I m4
 SUBDIRS=src
+dist_data_DATA=cudalt.py
+CCLD = $(CC)
+LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@

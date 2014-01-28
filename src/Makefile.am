@@ -1,10 +1,12 @@
-bin_PROGRAMS=opencv_intro
-
-opencv_intro_CFLAGS=$(OPENCV_CFLAGS)
-opencv_intro_LDADD=$(OPENCV_LIBS)
-opencv_intro_SOURCES=opencv-intro.c
-
-#wx_intro_CFLAGS=$(WX_CFLAGS)
-#wx_intro_LDADD=$(WX_LIBS)
-#wx_intro_SOURCES=wx-intro.c
-
+.cu.o:
+	$(NVCC) -o $@ -c $< $(NVCCFLAGS)
+	
+.cu.lo:
+	$(top_srcdir)/cudalt.py $@ $(NVCC) $(NVCC_CFLAGS) --compiler-options=\"$(CFLAGS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS)\" -c $<
+	
+CCLD=$(CC)
+bin_PROGRAMS = cuda_intro
+cuda_intro_SOURCES = cuda_intro.c
+cuda_intro_CFLAGS = $(CUDA_CFLAGS)
+cuda_intro_LDADD = $(CUDA_LIBS)
+cuda_intro_LDFLAGS =
