@@ -13,4 +13,4 @@ Makefile
 libtool
 .deps
 *.o
-*~
+stamp-h1
