@@ -59,16 +59,44 @@ AC_SUBST(NVCCFLAGS)
 #Check for CUDA libraries
 save_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS $CUDA_LDFLAGS"
-AC_CHECK_LIB([cudart], [cudaMalloc], [], [
-	echo "ERROR: CUDA must be installed."
-	exit -1
-])
+AC_CHECK_LIB([cudart], [cudaMalloc], HAVE_CUDA=yes, HAVE_CUDA=no)
 LDFLAGS="$save_LDFLAGS"
 
-ACX_PTHREADS([], [
-	echo "ERROR: Could not determine pthreads flags."
-	exit -1
-])
+if test "x$HAVE_CUDA" = "xno"; then
+	AC_MSG_ERROR(CUDA libraries could not be found.)
+fi
+
+dnl Check for Pthreads
+AX_PTHREAD(HAVE_PTHREAD=yes, HAVE_PTHREAD=no)
+
+if test "x$HAVE_PTHREAD" = "xno"; then
+	AC_MSG_ERROR(Pthread library not found. Please set PTHREAD_CFLAGS and PTHREAD_LIBS correctly for your setup)
+fi
+
+AC_SUBST(PTHREAD_LIBS)
+AC_SUBST(PTHREAD_CFLAGS)
+AC_SUBST(PTHREAD_CC)
+
+dnl Check for openmp
+AX_OPENMP(HAVE_OPENMP=yes, HAVE_OPENMP=no)
+
+if test "x$HAVE_OPENMP" = "xno"; then
+	AC_MSG_ERROR(OpenMP libraries are not found. Please set OPENMP_CFLAGS and OPENMP_LIBS correctly for your setup)
+fi
+
+AC_SUBST(OPENMP_CFLAGS)
+AC_SUBST(OPENMP_CXXFLAGS)
+
+dnl Check for openmpi
+AX_MPI(HAVE_MPI=yes, HAVE_MPI=no)
+
+if test "x$HAVE_MPI" = "xno"; then
+	AC_MSG_ERROR(MPI libraries are not found.  Please set MPICC, MPICXX, and MPILIBS)
+fi
+
+AC_SUBST(MPICC)
+AC_SUBST(MPICXX)
+AC_SUBST(MPILIBS)
 
 AC_CONFIG_FILES(Makefile src/Makefile)
 AC_OUTPUT
