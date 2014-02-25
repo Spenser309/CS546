@@ -52,14 +52,19 @@ AC_SUBST(OPENMP_CXXFLAGS)
 
 dnl Check for openmpi
 AX_MPI(HAVE_MPI=yes, HAVE_MPI=no)
+LX_FIND_MPI
 
 if test "x$HAVE_MPI" = "xno"; then
 	AC_MSG_ERROR(MPI libraries are not found.  Please set MPICC, MPICXX, and MPILIBS)
 fi
 
 AC_SUBST(MPICC)
+AC_SUBST(MPI_CFLAGS)
+AC_SUBST(MPI_CLDFLAGS)
+
 AC_SUBST(MPICXX)
-AC_SUBST(MPILIBS)
+AC_SUBST(MPI_CXXFLAGS)
+AC_SUBST(MPI_CXXLDFLAGS)
 
 #find out what version we are running
 ARCH=`uname -m`
@@ -73,7 +78,7 @@ fi
 # Setup CUDA paths
 # ------------------------------------------------------------------------------
 AC_ARG_WITH([cuda],
-   [  --with-cuda=PATH  		    prefix where cuda is installed [default=auto]])
+   [  --with-cuda=PATH		    prefix where cuda is installed [default=auto]])
 if test -n "$with_cuda"
 then
    CUDA_CFLAGS="-I$with_cuda/include"

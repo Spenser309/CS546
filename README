@@ -1,1 +1,13 @@
-Sample readme file for opencv-intro project.
+README
+------
+
+This is build infrastructure for CS546.  This make file has examples for
+Pthreads, OpenMP, MPI, and CUDA.
+
+To run Pthread, OpenMP, and CUDA applications.
+
+# ./<prog_name>
+
+To run MPI applications
+
+# mpirun <prog_name>

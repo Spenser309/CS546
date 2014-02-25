@@ -1,1 +1,4 @@
 cuda_intro
+omp_intro
+pthread_intro
+mpi_intro
