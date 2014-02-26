@@ -1,6 +1,18 @@
 README
 ------
 
+To build your applications the common
+
+# ./configure
+# make
+
+can be used.
+
+For CUDA applications, you may need to specify the location of CUDA in the
+./configure stage. i.e. on Jarvis the following can be used.
+
+# ./configure --with-cuda=/usr/local/cuda/cuda-5.5/
+
 This is build infrastructure for CS546.  This make file has examples for
 Pthreads, OpenMP, MPI, and CUDA.
 
